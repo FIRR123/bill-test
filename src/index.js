@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
-import add from "@/test.js"
+import add from "@/test"
 let total = add(1,1)
 console.log(total)
 
