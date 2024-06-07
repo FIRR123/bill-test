@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-
-import add from "@/test"
-let total = add(1,1)
-console.log(total)
+import { RouterProvider } from 'react-router-dom';
+import router from './router';
+import "./theme.css"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <App />
+    <RouterProvider router={router} />
 );
 
