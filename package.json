@@ -8,6 +8,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "antd-mobile": "^5.36.1",
+    "antd-mobile-icons": "^0.3.0",
     "axios": "^1.7.2",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.11",
@@ -45,6 +46,7 @@
   },
   "devDependencies": {
     "@craco/craco": "^7.1.0",
-    "json-server": "1.0.0-beta.0"
+    "json-server": "1.0.0-beta.0",
+    "sass": "^1.77.4"
   }
 }
