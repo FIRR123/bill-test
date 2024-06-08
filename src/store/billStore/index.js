@@ -11,7 +11,6 @@ const billStore = createSlice({
   reducers: {
     setBillList(state, action){
       state.billList = action.payload
-      
     }
   }
 })
