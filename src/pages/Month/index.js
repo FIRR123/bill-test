@@ -1,7 +1,13 @@
 import { NavBar, DatePicker } from 'antd-mobile'
 import './index.scss'
+import { useState } from 'react'
+import classNames from 'classnames';
 
 const Month = () => {
+
+  // 控制弹窗是否出现
+  const [dateVisible, setDateVisible] = useState(false);
+
   return (
     <div className="monthlyBill">
       <NavBar className="nav" backArrow={false}>
@@ -14,7 +20,8 @@ const Month = () => {
             <span className="text">
               2023 | 3月账单
             </span>
-            <span className='arrow expand'></span>
+            {/* 根据弹窗判断箭头朝向 */}
+            <span onClick={() => setDateVisible(true)} className={classNames('arrow', dateVisible && 'expand')}></span>
           </div>
           {/* 统计区域 */}
           <div className='twoLineOverview'>
@@ -36,7 +43,9 @@ const Month = () => {
             className="kaDate"
             title="记账日期"
             precision="month"
-            visible={false}
+            visible={dateVisible}
+            onConfirm={() => setDateVisible(false)}
+            onCancel={() => setDateVisible(false)}
             max={new Date()}
           />
         </div>
