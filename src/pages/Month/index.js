@@ -14,7 +14,6 @@ const Month = () => {
   let monthGroups = useMemo(() => {
     return _.groupBy(billList, (item) => dayjs(item.date).format("YYYY-MM"))
   }, [billList])
-  console.log(monthGroups)
 
   // 控制弹窗是否出现
   const [dateVisible, setDateVisible] = useState(false);
@@ -24,11 +23,36 @@ const Month = () => {
     return dayjs(new Date()).format('YYYY-MM')
   })
 
+  // 根据选择时间筛选出的当前月的账单
+  const [currentList, setCurrentList] = useState([]);
+
+  // 计算选择月的支出收入和结余
+  let currentResult = useMemo(()=> {
+    if(currentList) {
+      let pay = currentList.filter(item => item.type === "pay").reduce((a,c) => a + c.money, 0)
+      let income = currentList.filter(item => item.type === "income").reduce((a,c) => a + c.money, 0)
+      let total = pay + income
+      return {
+        pay, income, total
+      }
+    } else {
+      let pay = -1
+      let income = -1
+      let total = -1
+      return {
+        pay, income, total
+      }
+    }
+  }, [currentList]);
+
   // 确认选择时间
   const confirmDate = (date) => {
     setDateVisible(false);
 
-    setChooseDate(dayjs(date).format('YYYY-MM'))
+    const formatDate = dayjs(date).format('YYYY-MM');
+    setChooseDate(formatDate)
+
+    setCurrentList(monthGroups[formatDate]);
   }
 
   return (
@@ -49,15 +73,15 @@ const Month = () => {
           {/* 统计区域 */}
           <div className='twoLineOverview'>
             <div className="item">
-              <span className="money">{100}</span>
+              <span className="money">{currentResult.pay.toFixed(2)}</span>
               <span className="type">支出</span>
             </div>
             <div className="item">
-              <span className="money">{200}</span>
+              <span className="money">{currentResult.income.toFixed(2)}</span>
               <span className="type">收入</span>
             </div>
             <div className="item">
-              <span className="money">{200}</span>
+              <span className="money">{currentResult.total.toFixed(2)}</span>
               <span className="type">结余</span>
             </div>
           </div>
