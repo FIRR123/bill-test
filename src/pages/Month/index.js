@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
 import _ from "lodash"
+import DailyBill from './components/DayBill';
 
 const Month = () => {
   // 账单数据
@@ -55,6 +56,15 @@ const Month = () => {
     setCurrentList(monthGroups[formatDate]);
   }
 
+    // 将账单按日分组
+    let dayGroups = useMemo(() => {
+      const dayResult = _.groupBy(currentList, (item) => dayjs(item.date).format("YYYY-MM-DD"));
+      const dayKes = Object.keys(dayResult);
+      return {
+        dayResult, dayKes
+      }
+    }, [currentList])
+
   return (
     <div className="monthlyBill">
       <NavBar className="nav" backArrow={false}>
@@ -96,6 +106,12 @@ const Month = () => {
             max={new Date()}
           />
         </div>
+        {/* 日组件 */}
+        {
+          dayGroups.dayKes.map(key => {
+            return <DailyBill key={key} date={key} dayBillList={dayGroups.dayResult[key]} />
+          })
+        }
       </div>
     </div >
   )
